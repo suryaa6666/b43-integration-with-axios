@@ -5,8 +5,6 @@ import { useQuery, useMutation } from 'react-query';
 
 import NavbarAdmin from '../components/NavbarAdmin';
 
-import { API } from '../config/api';
-
 export default function UpdateCategoryAdmin() {
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
@@ -15,44 +13,12 @@ export default function UpdateCategoryAdmin() {
   const { id } = useParams();
   const [category, setCategory] = useState({ name: '' });
 
-  let { data: categoryData } = useQuery('categoryCache', async () => {
-    const response = await API.get('/category/' + id);
-    return response.data.data.name;
-  });
-
-  useEffect(() => {
-    if (categoryData) {
-      console.log(categoryData);
-      setCategory({ name: categoryData });
-    }
-  }, [categoryData]);
-
   const handleChange = (e) => {
     setCategory({
       ...category,
       name: e.target.value,
     });
   };
-
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      const body = JSON.stringify(category);
-
-      await API.patch('/category/' + id, body, config);
-
-      navigate('/category-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
 
   return (
     <>
@@ -63,7 +29,7 @@ export default function UpdateCategoryAdmin() {
             <div className="text-header-category mb-4">Edit Category</div>
           </Col>
           <Col xs="12">
-            <form onSubmit={(e) => handleSubmit.mutate(e)}>
+            <form>
               <input
                 onChange={handleChange}
                 value={category.name}

@@ -8,42 +8,11 @@ import Navbar from '../components/Navbar';
 
 import dataProduct from '../fakeData/product';
 
-import { API } from '../config/api';
-
 export default function DetailProduct() {
   let navigate = useNavigate();
   let { id } = useParams();
 
-  let { data: product } = useQuery('productCache', async () => {
-    const response = await API.get('/product/' + id);
-    return response.data.data;
-  });
-
-  const handleBuy = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      const data = {
-        idProduct: product.id,
-        idSeller: product.user.id,
-        price: product.price,
-      };
-
-      const body = JSON.stringify(data);
-
-      await API.post('/transaction', body, config);
-
-      navigate('/profile');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  let product = {};
 
   return (
     <div>
@@ -64,12 +33,7 @@ export default function DetailProduct() {
               {convertRupiah.convert(product?.price)}
             </div>
             <div className="d-grid gap-2 mt-5">
-              <button
-                onClick={(e) => handleBuy.mutate(e)}
-                className="btn btn-buy"
-              >
-                Buy
-              </button>
+              <button className="btn btn-buy">Buy</button>
             </div>
           </Col>
         </Row>

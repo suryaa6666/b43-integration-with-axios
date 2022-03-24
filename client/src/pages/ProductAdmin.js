@@ -10,25 +10,12 @@ import DeleteData from '../components/modal/DeleteData';
 
 import imgEmpty from '../assets/empty.svg';
 
-import { API } from '../config/api';
-
 export default function ProductAdmin() {
   let navigate = useNavigate();
+  let products = [];
 
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
-
-  const [idDelete, setIdDelete] = useState(null);
-  const [confirmDelete, setConfirmDelete] = useState(null);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  let { data: products, refetch } = useQuery('productsCache', async () => {
-    const response = await API.get('/products');
-    return response.data.data;
-  });
 
   const addProduct = () => {
     navigate('/add-product');
@@ -37,28 +24,6 @@ export default function ProductAdmin() {
   const handleUpdate = (id) => {
     navigate('/update-product/' + id);
   };
-
-  const handleDelete = (id) => {
-    setIdDelete(id);
-    handleShow();
-  };
-
-  const deleteById = useMutation(async (id) => {
-    try {
-      await API.delete(`/product/${id}`);
-      refetch();
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  useEffect(() => {
-    if (confirmDelete) {
-      handleClose();
-      deleteById.mutate(idDelete);
-      setConfirmDelete(null);
-    }
-  }, [confirmDelete]);
 
   return (
     <>
@@ -112,7 +77,6 @@ export default function ProductAdmin() {
                       <td className="align-middle">{item.name}</td>
                       <td className="align-middle">
                         <ShowMoreText
-                          /* Default options */
                           lines={1}
                           more="show"
                           less="hide"

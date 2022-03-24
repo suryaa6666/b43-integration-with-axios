@@ -12,18 +12,12 @@ import ProductCard from '../components/card/ProductCard';
 import imgEmpty from '../assets/empty.svg';
 
 // API config
-import { API } from '../config/api';
 
 export default function Product() {
   const title = 'Shop';
   document.title = 'DumbMerch | ' + title;
 
-  let { data: products } = useQuery('productsCache', async () => {
-    const response = await API.get('/products');
-    return response.data.data;
-  });
-
-  console.log(products);
+  let products = [];
 
   const breakpointColumnsObj = {
     default: 6,

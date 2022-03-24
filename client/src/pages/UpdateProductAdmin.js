@@ -8,8 +8,6 @@ import CheckBox from '../components/form/CheckBox';
 
 import dataProduct from '../fakeData/product';
 
-import { API } from '../config/api';
-
 export default function UpdateProductAdmin() {
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
@@ -21,46 +19,6 @@ export default function UpdateProductAdmin() {
   const [categoryId, setCategoryId] = useState([]); //Save the selected category id
   const [preview, setPreview] = useState(null); //For image preview
   const [product, setProduct] = useState({}); //Store product data
-  const [form, setForm] = useState({
-    image: '',
-    name: '',
-    desc: '',
-    price: '',
-    qty: '',
-  }); //Store product data
-
-  // Fetching detail product data by id from database
-  let { data: products, refetch } = useQuery('productCache', async () => {
-    const response = await API.get('/product/' + id);
-    return response.data.data;
-  });
-
-  // Fetching category data
-  let { data: categoriesData, refetch: refetchCategories } = useQuery(
-    'categoriesCache',
-    async () => {
-      const response = await API.get('/categories');
-      return response.data.data;
-    }
-  );
-
-  useEffect(() => {
-    if (products) {
-      setPreview(products.image);
-      setForm({
-        ...form,
-        name: products.name,
-        desc: products.desc,
-        price: products.price,
-        qty: products.qty,
-      });
-      setProduct(products);
-    }
-
-    if (categoriesData) {
-      setCategories(categoriesData);
-    }
-  }, [products]);
 
   // For handle if category selected
   const handleChangeCategoryId = (e) => {
@@ -94,42 +52,6 @@ export default function UpdateProductAdmin() {
     }
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      // Configuration
-      const config = {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      };
-
-      // Store data with FormData as object
-      const formData = new FormData();
-      if (form.image) {
-        formData.set('image', form?.image[0], form?.image[0]?.name);
-      }
-      formData.set('name', form.name);
-      formData.set('desc', form.desc);
-      formData.set('price', form.price);
-      formData.set('qty', form.qty);
-      formData.set('categoryId', categoryId);
-
-      // Insert product data
-      const response = await API.patch(
-        '/product/' + product.id,
-        formData,
-        config
-      );
-      console.log(response.data);
-
-      navigate('/product-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
   useEffect(() => {
     const newCategoryId = product?.categories?.map((item) => {
       return item.id;
@@ -147,7 +69,7 @@ export default function UpdateProductAdmin() {
             <div className="text-header-category mb-4">Update Product</div>
           </Col>
           <Col xs="12">
-            <form onSubmit={(e) => handleSubmit.mutate(e)}>
+            <form>
               {preview && (
                 <div>
                   <img

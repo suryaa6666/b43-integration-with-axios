@@ -3,8 +3,6 @@ import { UserContext } from '../../context/userContext';
 import { Alert } from 'react-bootstrap';
 import { useMutation } from 'react-query';
 
-import { API } from '../../config/api';
-
 export default function Register() {
   const title = 'Register';
   document.title = 'DumbMerch | ' + title;
@@ -12,13 +10,6 @@ export default function Register() {
   const [state, dispatch] = useContext(UserContext);
 
   const [message, setMessage] = useState(null);
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const { name, email, password } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -26,55 +17,6 @@ export default function Register() {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      // Configuration Content-type
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      // Data body
-      const body = JSON.stringify(form);
-
-      // Insert data user to database
-      const response = await API.post('/register', body, config);
-
-      // Notification
-      if (response.data.status === 'success...') {
-        const alert = (
-          <Alert variant="success" className="py-1">
-            Success
-          </Alert>
-        );
-        setMessage(alert);
-        setForm({
-          name: '',
-          email: '',
-          password: '',
-        });
-      } else {
-        const alert = (
-          <Alert variant="danger" className="py-1">
-            Failed
-          </Alert>
-        );
-        setMessage(alert);
-      }
-    } catch (error) {
-      const alert = (
-        <Alert variant="danger" className="py-1">
-          Failed
-        </Alert>
-      );
-      setMessage(alert);
-      console.log(error);
-    }
-  });
 
   return (
     <div className="d-flex justify-content-center">
@@ -91,7 +33,6 @@ export default function Register() {
             <input
               type="text"
               placeholder="Name"
-              value={name}
               name="name"
               onChange={handleChange}
               className="px-3 py-2"
@@ -99,7 +40,6 @@ export default function Register() {
             <input
               type="email"
               placeholder="Email"
-              value={email}
               name="email"
               onChange={handleChange}
               className="px-3 py-2 mt-3"
@@ -107,7 +47,6 @@ export default function Register() {
             <input
               type="password"
               placeholder="Password"
-              value={password}
               name="password"
               onChange={handleChange}
               className="px-3 py-2 mt-3"

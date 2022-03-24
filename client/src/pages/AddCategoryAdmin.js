@@ -7,8 +7,6 @@ import NavbarAdmin from '../components/NavbarAdmin';
 
 import dataCategory from '../fakeData/category';
 
-import { API } from '../config/api';
-
 export default function AddCategoryAdmin() {
   console.clear();
 
@@ -22,29 +20,6 @@ export default function AddCategoryAdmin() {
     setCategory(e.target.value);
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      // Configuration
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      // Data body
-      const body = JSON.stringify({ name: category });
-
-      // Insert category data
-      const response = await API.post('/category', body, config);
-
-      navigate('/category-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
   return (
     <>
       <NavbarAdmin title={title} />
@@ -54,7 +29,7 @@ export default function AddCategoryAdmin() {
             <div className="text-header-category mb-4">Add Category</div>
           </Col>
           <Col xs="12">
-            <form onSubmit={(e) => handleSubmit.mutate(e)}>
+            <form>
               <input
                 onChange={handleChange}
                 placeholder="category"

@@ -12,25 +12,14 @@ import { UserContext } from '../context/userContext';
 
 import imgBlank from '../assets/blank-profile.png';
 
-import { API } from '../config/api';
-
 export default function Profile() {
   const title = 'Profile';
   document.title = 'DumbMerch | ' + title;
 
   const [state] = useContext(UserContext);
 
-  // const [transactions, setTransactions] = useState([]);
-
-  let { data: profile } = useQuery('profileCache', async () => {
-    const response = await API.get('/profile');
-    return response.data.data;
-  });
-
-  let { data: transactions } = useQuery('transactionsCache', async () => {
-    const response = await API.get('/transactions');
-    return response.data.data;
-  });
+  let transactions = [];
+  let profile = {};
 
   return (
     <>
