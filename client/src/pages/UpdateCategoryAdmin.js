@@ -13,12 +13,10 @@ export default function UpdateCategoryAdmin() {
 
   let navigate = useNavigate();
   const { id } = useParams();
-  const [category, setCategory] = useState({ name: '' });
 
-  useQuery('categoryCache', async () => {
-    const response = await API.get('/category/' + id);
-    setCategory({ name: response.data.data.name });
-  });
+  // Create Variabel for store category data here ...
+
+  // Create function get category data by id from database here ...
 
   const handleChange = (e) => {
     setCategory({
@@ -27,25 +25,7 @@ export default function UpdateCategoryAdmin() {
     });
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      const body = JSON.stringify(category);
-
-      const response = await API.patch('/category/' + id, body, config);
-
-      navigate('/category-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  // Create function for handle submit data ...
 
   return (
     <>
@@ -56,7 +36,7 @@ export default function UpdateCategoryAdmin() {
             <div className="text-header-category mb-4">Edit Category</div>
           </Col>
           <Col xs="12">
-            <form onSubmit={(e) => handleSubmit.mutate(e)}>
+            <form>
               <input
                 onChange={handleChange}
                 value={category.name}

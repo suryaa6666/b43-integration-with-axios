@@ -16,10 +16,6 @@ export default function CategoryAdmin() {
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
 
-  // Create variabel for id product and confirm delete data with useState here ...
-
-  // Create init useState & function for handle show-hide modal confirm here ...
-
   let { data: categories, refetch } = useQuery('categoriesCache', async () => {
     const response = await API.get('/categories');
     return response.data.data;
@@ -28,13 +24,6 @@ export default function CategoryAdmin() {
   const handleEdit = (id) => {
     navigate(`/update-category/${id}`);
   };
-
-  // Create function handle get id product & show modal confirm delete data here ...
-
-  // Create function for handle delete product here ...
-  // If confirm is true, execute delete data
-
-  // Call function for handle close modal and execute delete data with useEffect here ...
 
   const addCategory = () => {
     navigate('/add-category');

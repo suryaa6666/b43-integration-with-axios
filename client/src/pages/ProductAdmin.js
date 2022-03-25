@@ -18,10 +18,6 @@ export default function ProductAdmin() {
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
 
-  // Create variabel for id product and confirm delete data with useState here ...
-
-  // Create init useState & function for handle show-hide modal confirm here ...
-
   let { data: products, refetch } = useQuery('productsCache', async () => {
     const response = await API.get('/products');
     return response.data.data;
@@ -34,13 +30,6 @@ export default function ProductAdmin() {
   const handleUpdate = (id) => {
     navigate('/update-product/' + id);
   };
-
-  // Create function handle get id product & show modal confirm delete data here ...
-
-  // Create function for handle delete product here ...
-  // If confirm is true, execute delete data
-
-  // Call function for handle close modal and execute delete data with useEffect here ...
 
   return (
     <>
