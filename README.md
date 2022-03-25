@@ -46,9 +46,10 @@ Before doing the integration, we make some preparations, including:
 
 ### Axios
 
+A promise based HTTP client for the browser and Node.js
+
 - Install Package Axios
   <br>
-  A promise based HTTP client for the browser and Node.js
 
   ```javascript
   npm install axios
@@ -73,6 +74,10 @@ Before doing the integration, we make some preparations, including:
   ```
 
 ### React Query
+
+React query is a collection of hooks for `fetching`, `caching`, and `updating` asynchronous state in React.
+
+For more info about react-query please refer to this [link](https://react-query.tanstack.com/docs/overview)
 
 - Install Package react-query
 
