@@ -18,12 +18,9 @@ export default function ProductAdmin() {
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
 
-  const [idDelete, setIdDelete] = useState(null);
-  const [confirmDelete, setConfirmDelete] = useState(null);
+  // Create variabel for id product and confirm delete data with useState here ...
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // Create init useState & function for handle show-hide modal confirm here ...
 
   let { data: products, refetch } = useQuery('productsCache', async () => {
     const response = await API.get('/products');
@@ -38,27 +35,12 @@ export default function ProductAdmin() {
     navigate('/update-product/' + id);
   };
 
-  const handleDelete = (id) => {
-    setIdDelete(id);
-    handleShow();
-  };
+  // Create function handle get id product & show modal confirm delete data here ...
 
-  const deleteById = useMutation(async (id) => {
-    try {
-      await API.delete(`/product/${id}`);
-      refetch();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  // Create function for handle delete product here ...
+  // If confirm is true, execute delete data
 
-  useEffect(() => {
-    if (confirmDelete) {
-      handleClose();
-      deleteById.mutate(idDelete);
-      setConfirmDelete(null);
-    }
-  }, [confirmDelete]);
+  // Call function for handle close modal and execute delete data with useEffect here ...
 
   return (
     <>
