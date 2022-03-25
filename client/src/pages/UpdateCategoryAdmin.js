@@ -14,18 +14,12 @@ export default function UpdateCategoryAdmin() {
   let navigate = useNavigate();
   const { id } = useParams();
 
-  // Create Variabel for store category data here ...
-
-  // Create function get category data by id from database here ...
-
   const handleChange = (e) => {
     setCategory({
       ...category,
       name: e.target.value,
     });
   };
-
-  // Create function for handle submit data ...
 
   return (
     <>
@@ -39,7 +33,7 @@ export default function UpdateCategoryAdmin() {
             <form>
               <input
                 onChange={handleChange}
-                value={category.name}
+                value={category?.name}
                 placeholder="category"
                 className="input-edit-category mt-4"
               />

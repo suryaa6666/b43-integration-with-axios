@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { useQuery, useMutation } from 'react-query';
+
+// Import useQuery here ...
 
 import NavbarAdmin from '../components/NavbarAdmin';
 import DeleteData from '../components/modal/DeleteData';
 
 import imgEmpty from '../assets/empty.svg';
 
-import { API } from '../config/api';
+// Get API config here ...
 
 export default function CategoryAdmin() {
   let navigate = useNavigate();
@@ -16,10 +17,7 @@ export default function CategoryAdmin() {
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
 
-  let { data: categories, refetch } = useQuery('categoriesCache', async () => {
-    const response = await API.get('/categories');
-    return response.data.data;
-  });
+  // Create process for fetching categories data from database with useQuery here ...
 
   const handleEdit = (id) => {
     navigate(`/update-category/${id}`);

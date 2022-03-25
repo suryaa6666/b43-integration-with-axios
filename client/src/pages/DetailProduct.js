@@ -2,48 +2,22 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import convertRupiah from 'rupiah-format';
-import { useQuery, useMutation } from 'react-query';
+
+// Import useQuery and useMutation here ...
 
 import Navbar from '../components/Navbar';
 
 import dataProduct from '../fakeData/product';
 
-import { API } from '../config/api';
+// Get API config here ...
 
 export default function DetailProduct() {
   let navigate = useNavigate();
   let { id } = useParams();
 
-  let { data: product } = useQuery('productCache', async () => {
-    const response = await API.get('/product/' + id);
-    return response.data.data;
-  });
+  // Create process for fetching product by id data from database with useQuery here ...
 
-  const handleBuy = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      const data = {
-        idProduct: product.id,
-        idSeller: product.user.id,
-        price: product.price,
-      };
-
-      const body = JSON.stringify(data);
-
-      await API.post('/transaction', body, config);
-
-      navigate('/profile');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  // Create function for handle buying process with useMutation here ...
 
   return (
     <div>
