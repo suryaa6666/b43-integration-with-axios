@@ -11,7 +11,6 @@ export default function UpdateCategoryAdmin() {
 
   let navigate = useNavigate();
   const { id } = useParams();
-  const [category, setCategory] = useState({ name: '' });
 
   const handleChange = (e) => {
     setCategory({
