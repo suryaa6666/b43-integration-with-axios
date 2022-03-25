@@ -2,9 +2,10 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../../context/userContext';
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
-import { useMutation } from 'react-query';
 
-import { API } from '../../config/api';
+// Import useMutation from react-query here ...
+
+// Get API config here ...
 
 export default function Login() {
   let navigate = useNavigate();
@@ -15,12 +16,10 @@ export default function Login() {
   const [state, dispatch] = useContext(UserContext);
 
   const [message, setMessage] = useState(null);
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
 
-  const { email, password } = form;
+  // Create variabel for store data with useState here ...
+
+  // const { email, password } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -29,55 +28,7 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      // Configuration
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      // Data body
-      const body = JSON.stringify(form);
-
-      // Insert data for login process
-      const response = await API.post('/login', body, config);
-
-      // Checking process
-      if (response?.status === 200) {
-        // Send data to useContext
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: response.data.data,
-        });
-
-        // Status check
-        if (response.data.data.status === 'admin') {
-          navigate('/complain-admin');
-        } else {
-          navigate('/');
-        }
-
-        const alert = (
-          <Alert variant="success" className="py-1">
-            Login success
-          </Alert>
-        );
-        setMessage(alert);
-      }
-    } catch (error) {
-      const alert = (
-        <Alert variant="danger" className="py-1">
-          Login failed
-        </Alert>
-      );
-      setMessage(alert);
-      console.log(error);
-    }
-  });
+  // Create function for handle insert data process with useMutation here ...
 
   return (
     <div className="d-flex justify-content-center">
@@ -89,7 +40,7 @@ export default function Login() {
           Login
         </div>
         {message && message}
-        <form onSubmit={(e) => handleSubmit.mutate(e)}>
+        <form>
           <div className="mt-3 form">
             <input
               type="email"

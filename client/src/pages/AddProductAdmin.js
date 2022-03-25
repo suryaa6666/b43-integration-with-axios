@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { useMutation } from 'react-query';
+
+// Import useMutation and useQuery from react-query here ...
 
 import NavbarAdmin from '../components/NavbarAdmin';
 
-import { API } from '../config/api';
+// Get API config here ...
 
 export default function AddProductAdmin() {
   console.clear();
@@ -17,13 +18,8 @@ export default function AddProductAdmin() {
   const [categories, setCategories] = useState([]); //Store all category data
   const [categoryId, setCategoryId] = useState([]); //Save the selected category id
   const [preview, setPreview] = useState(null); //For image preview
-  const [form, setForm] = useState({
-    image: '',
-    name: '',
-    desc: '',
-    price: '',
-    qty: '',
-  }); //Store product data
+
+  // Create variabel for store data with useState here ...
 
   // Fetching category data
   const getCategories = async () => {
@@ -67,41 +63,11 @@ export default function AddProductAdmin() {
     }
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
+  // Create function for handle insert product data with useMutation here ...
 
-      // Configuration
-      const config = {
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-      };
-
-      // Store data with FormData as object
-      const formData = new FormData();
-      formData.set('image', form.image[0], form.image[0].name);
-      formData.set('name', form.name);
-      formData.set('desc', form.desc);
-      formData.set('price', form.price);
-      formData.set('qty', form.qty);
-      formData.set('categoryId', categoryId);
-
-      console.log(form);
-
-      // Insert product data
-      const response = await API.post('/product', formData, config);
-      console.log(response);
-
-      navigate('/product-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
-  useEffect(() => {
-    getCategories();
-  }, []);
+  // useEffect(() => {
+  //   getCategories();
+  // }, []);
 
   return (
     <>
@@ -172,14 +138,14 @@ export default function AddProductAdmin() {
                 >
                   Category
                 </div>
-                {categories.map((item, index) => (
+                {categories?.map((item, index) => (
                   <label className="checkbox-inline me-4" key={index}>
                     <input
                       type="checkbox"
-                      value={item.id}
+                      value={item?.id}
                       onClick={handleChangeCategoryId}
                     />{' '}
-                    {item.name}
+                    {item?.name}
                   </label>
                 ))}
               </div>

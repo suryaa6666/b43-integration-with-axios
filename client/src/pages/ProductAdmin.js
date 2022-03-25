@@ -4,22 +4,16 @@ import { useNavigate } from 'react-router';
 import ShowMoreText from 'react-show-more-text';
 import rupiahFormat from 'rupiah-format';
 
-// Import useQuery here ...
-
 import NavbarAdmin from '../components/NavbarAdmin';
 import DeleteData from '../components/modal/DeleteData';
 
 import imgEmpty from '../assets/empty.svg';
-
-// Get API config here ...
 
 export default function ProductAdmin() {
   let navigate = useNavigate();
 
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
-
-  // Create process for fetching products data from database with useQuery here ...
 
   const addProduct = () => {
     navigate('/add-product');

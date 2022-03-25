@@ -3,8 +3,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import dateFormat from 'dateformat';
 import convertRupiah from 'rupiah-format';
 
-// Import useQuery here ...
-
 import Navbar from '../components/Navbar';
 
 import imgDumbMerch from '../assets/DumbMerch.png';
@@ -13,17 +11,11 @@ import { UserContext } from '../context/userContext';
 
 import imgBlank from '../assets/blank-profile.png';
 
-// Get API config here ...
-
 export default function Profile() {
   const title = 'Profile';
   document.title = 'DumbMerch | ' + title;
 
   const [state] = useContext(UserContext);
-
-  // Create process for fetching profile data from database with useQuery here ...
-
-  // Create process for fetching transactions data from database with useQuery here ...
 
   return (
     <>

@@ -3,21 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import convertRupiah from 'rupiah-format';
 
-// Import useQuery and useMutation here ...
-
 import Navbar from '../components/Navbar';
 
 import dataProduct from '../fakeData/product';
 
-// Get API config here ...
-
 export default function DetailProduct() {
   let navigate = useNavigate();
   let { id } = useParams();
-
-  // Create process for fetching product by id data from database with useQuery here ...
-
-  // Create function for handle buying process with useMutation here ...
 
   return (
     <div>

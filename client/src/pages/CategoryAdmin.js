@@ -2,22 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
-// Import useQuery here ...
-
 import NavbarAdmin from '../components/NavbarAdmin';
 import DeleteData from '../components/modal/DeleteData';
 
 import imgEmpty from '../assets/empty.svg';
-
-// Get API config here ...
 
 export default function CategoryAdmin() {
   let navigate = useNavigate();
 
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
-
-  // Create process for fetching categories data from database with useQuery here ...
 
   const handleEdit = (id) => {
     navigate(`/update-category/${id}`);

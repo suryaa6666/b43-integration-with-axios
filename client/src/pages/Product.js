@@ -5,20 +5,14 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import { UserContext } from '../context/userContext';
 
-// Import useQuery here ...
-
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/card/ProductCard';
 
 import imgEmpty from '../assets/empty.svg';
 
-// Get API config here ...
-
 export default function Product() {
   const title = 'Shop';
   document.title = 'DumbMerch | ' + title;
-
-  // Create process for fetching products data from database with useQuery here ...
 
   const breakpointColumnsObj = {
     default: 6,

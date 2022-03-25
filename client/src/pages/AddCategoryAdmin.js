@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { useMutation } from 'react-query';
+
+// Import useMutation from react-query here ...
 
 import NavbarAdmin from '../components/NavbarAdmin';
 
 import dataCategory from '../fakeData/category';
 
-import { API } from '../config/api';
+// Get API config here ...
 
 export default function AddCategoryAdmin() {
   console.clear();
 
   let navigate = useNavigate();
-  const [category, setCategory] = useState('');
+
+  // Create variabel for store data with useState here ...
 
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
@@ -22,28 +24,7 @@ export default function AddCategoryAdmin() {
     setCategory(e.target.value);
   };
 
-  const handleSubmit = useMutation(async (e) => {
-    try {
-      e.preventDefault();
-
-      // Configuration
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      };
-
-      // Data body
-      const body = JSON.stringify({ name: category });
-
-      // Insert category data
-      const response = await API.post('/category', body, config);
-
-      navigate('/category-admin');
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  // Create function for handle insert category data with useMutation here ...
 
   return (
     <>
@@ -58,7 +39,6 @@ export default function AddCategoryAdmin() {
               <input
                 onChange={handleChange}
                 placeholder="category"
-                value={category}
                 name="category"
                 className="input-edit-category mt-4"
               />
