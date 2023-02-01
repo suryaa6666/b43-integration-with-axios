@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Auth from './pages/Auth';
 // import Product from './pages/Product';
@@ -10,7 +10,7 @@ import Auth from './pages/Auth';
 // import ProductAdmin from './pages/ProductAdmin';
 // import UpdateCategoryAdmin from './pages/UpdateCategoryAdmin';
 // import AddCategoryAdmin from './pages/AddCategoryAdmin';
-// import AddProductAdmin from './pages/AddProductAdmin';
+import AddProductAdmin from './pages/AddProductAdmin';
 // import UpdateProductAdmin from './pages/UpdateProductAdmin';
 
 // Get API config & setAuthToken here ...
@@ -21,28 +21,30 @@ import { UserContext } from './context/userContext';
 
 function App() {
   const [state, dispatch] = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (state.isLogin == false) {
-      navigate('/auth');
-    } else {
-      if (state.user.status == 'admin') {
-        navigate('/complain-admin');
-      } else if (state.user.status == 'customer') {
-        navigate('/');
+    if (!isLoading) {
+      if (state.isLogin == false) {
+        navigate('/auth');
+      } else {
+        console.log("masuk sini ga?", state)
+        if (state.user.status == 'admin') {
+          navigate('/complain-admin');
+        } else if (state.user.status == 'customer') {
+          navigate('/add-product');
+        }
       }
     }
-  }, [state]);
+  }, [isLoading]);
 
   const checkUser = async () => {
     try {
-      const response = await API.get('/check-auth', {
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        }
-      });
+      const response = await API.get('/check-auth');
+
+      console.log("check auth bro", response)
 
       let payload = response.data.data;
       payload.token = localStorage.token;
@@ -51,13 +53,18 @@ function App() {
         type: 'USER_SUCCESS',
         payload,
       });
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
 
   useEffect(() => {
-    checkUser();
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      checkUser();
+    }
   }, []);
 
 
@@ -72,9 +79,9 @@ function App() {
       <Route path="/category-admin" element={<CategoryAdmin />} />
       <Route path="/update-category/:id" element={<UpdateCategoryAdmin />} />
       <Route path="/add-category" element={<AddCategoryAdmin />} />
-      <Route path="/product-admin" element={<ProductAdmin />} />
+      <Route path="/product-admin" element={<ProductAdmin />} /> */}
       <Route path="/add-product" element={<AddProductAdmin />} />
-      <Route path="/update-product/:id" element={<UpdateProductAdmin />} /> */}
+      {/* <Route path="/update-product/:id" element={<UpdateProductAdmin />} /> */}
     </Routes>
   );
 }

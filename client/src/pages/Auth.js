@@ -12,14 +12,14 @@ import Register from "../components/auth/Register";
 export default function Auth() {
   let navigate = useNavigate();
 
-  const [state] = useContext(UserContext);
+  // const [state] = useContext(UserContext);
 
-  const checkAuth = () => {
-    if (state.isLogin === true) {
-      navigate("/");
-    }
-  };
-  checkAuth();
+  // const checkAuth = () => {
+  //   if (state.isLogin === true) {
+  //     navigate("/");
+  //   }
+  // };
+  // checkAuth();
 
   const [isRegister, setIsRegister] = useState(false);
 

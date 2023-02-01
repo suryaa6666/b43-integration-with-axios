@@ -3,13 +3,14 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
 // Import useMutation and useQuery from react-query here ...
+import { useMutation } from 'react-query';
 
 import NavbarAdmin from '../components/NavbarAdmin';
 
 // Get API config here ...
+import { API } from '../config/api';
 
 export default function AddProductAdmin() {
-  console.clear();
   const title = 'Product admin';
   document.title = 'DumbMerch | ' + title;
 
@@ -20,6 +21,13 @@ export default function AddProductAdmin() {
   const [preview, setPreview] = useState(null); //For image preview
 
   // Create variabel for store data with useState here ...
+  const [form, setForm] = useState({
+    image: "",
+    name: "",
+    desc: "",
+    price: "",
+    qty: "",
+  })
 
   // Fetching category data
   const getCategories = async () => {
@@ -59,11 +67,29 @@ export default function AddProductAdmin() {
     // Create image url for preview
     if (e.target.type === 'file') {
       let url = URL.createObjectURL(e.target.files[0]);
+      console.log("ini data blob", url)
       setPreview(url);
     }
   };
 
   // Create function for handle insert product data with useMutation here ...
+  const handleSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault()
+      console.log("ini data productmu", form)
+      const formData = new FormData();
+      formData.append("image", form.image[0]);
+      formData.append("name", form.name);
+      formData.append("desc", form.desc);
+      formData.append("price", form.price);
+      formData.append("qty", form.qty);
+
+      const response = await API.post('/product', formData)
+      console.log("berhasil menambahkan product", response)
+    } catch (err) {
+      console.log("gagal upload product", err)
+    }
+  })
 
   // useEffect(() => {
   //   getCategories();
