@@ -109,7 +109,7 @@ export default function ProductAdmin() {
                         >
                           Edit
                         </Button>
-                        <Button
+                        {/* <Button
                           onClick={() => {
                             handleDelete(item.id);
                           }}
@@ -117,7 +117,7 @@ export default function ProductAdmin() {
                           style={{ width: '135px' }}
                         >
                           Delete
-                        </Button>
+                        </Button> */}
                       </td>
                     </tr>
                   ))}
@@ -137,11 +137,11 @@ export default function ProductAdmin() {
           </Col>
         </Row>
       </Container>
-      <DeleteData
+      {/* <DeleteData
         setConfirmDelete={setConfirmDelete}
         show={show}
         handleClose={handleClose}
-      />
+      /> */}
     </>
   );
 }
