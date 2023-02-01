@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 
 // Import useMutation from react-query here ...
+import { useMutation } from 'react-query';
+import { API } from '../../config/api';
 
 // Get API config here ...
 
@@ -14,12 +16,14 @@ export default function Login() {
   document.title = 'DumbMerch | ' + title;
 
   const [state, dispatch] = useContext(UserContext);
-
   const [message, setMessage] = useState(null);
 
   // Create variabel for store data with useState here ...
-
-  // const { email, password } = form;
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -29,6 +33,32 @@ export default function Login() {
   };
 
   // Create function for handle insert data process with useMutation here ...
+  const handleLogin = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+
+      const response = await API.post("/login", form);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: response.data.data
+      })
+      const alert = (
+        <Alert variant="success" className="py-1">
+          Success {response.data.data.email}
+        </Alert>
+      );
+      setMessage(alert);
+
+    } catch (error) {
+      const alert = (
+        <Alert variant="danger" className="py-1">
+          Failed
+        </Alert>
+      );
+      setMessage(alert);
+      console.log(error);
+    }
+  })
 
   return (
     <div className="d-flex justify-content-center">
@@ -40,7 +70,7 @@ export default function Login() {
           Login
         </div>
         {message && message}
-        <form>
+        <form onSubmit={(e) => handleLogin.mutate(e)}>
           <div className="mt-3 form">
             <input
               type="email"
@@ -60,7 +90,7 @@ export default function Login() {
             />
           </div>
           <div className="d-grid gap-2 mt-5">
-            <button className="btn btn-login">Login</button>
+            <button className="btn btn-login">{handleLogin.isLoading ? "Loading..." : "Login"}</button>
           </div>
         </form>
       </div>

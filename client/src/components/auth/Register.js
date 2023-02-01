@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 
 // Import useMutation from react-query here ...
+import { useMutation } from 'react-query'
 
 // Get API config here ...
+import { API } from '../../config/api'
 
 export default function Register() {
   let navigate = useNavigate();
@@ -18,8 +20,13 @@ export default function Register() {
   const [message, setMessage] = useState(null);
 
   // Create variabel for store data with useState here ...
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-  // const { name, email, password } = form;
+  const { name, email, password } = form;
 
   const handleChange = (e) => {
     setForm({
@@ -29,6 +36,37 @@ export default function Register() {
   };
 
   // Create function for handle insert data process with useMutation here ...
+  const handleRegister = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+      // const config = {
+      //   headers: {
+      //     'Content-type': 'application/json',
+      //   },
+      // };
+
+      // // Data body
+      // const body = JSON.stringify(form);
+
+      const response = await API.post('/register', form)
+      const alert = (
+        <Alert variant="success" className="py-1">
+          Success
+        </Alert>
+      );
+      setMessage(alert);
+      console.log("habis register : ", response);
+
+    } catch (error) {
+      const alert = (
+        <Alert variant="danger" className="py-1">
+          Failed
+        </Alert>
+      );
+      setMessage(alert);
+      console.log(error);
+    }
+  })
 
   return (
     <div className="d-flex justify-content-center">
@@ -40,7 +78,7 @@ export default function Register() {
           Register
         </div>
         {message && message}
-        <form>
+        <form onSubmit={(e) => handleRegister.mutate(e)}>
           <div className="mt-3 form">
             <input
               type="text"
