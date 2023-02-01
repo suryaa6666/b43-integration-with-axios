@@ -10,6 +10,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContextProvider } from './context/userContext';
 
 // Init QueryClient and QueryClientProvider here ...
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 
 // favicon
 import Favicon from './assets/DumbMerch.png';
@@ -17,15 +19,16 @@ const favicon = document.getElementById('idFavicon');
 favicon.setAttribute('href', Favicon);
 
 // Init Client from QueryClient() here ...
+const clientganteng = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
-      {/* Add opening QueryClientProvider component and client as props */}
-      <Router>
-        <App />
-      </Router>
-      {/* Add closing QueryClientProvider component */}
+      <QueryClientProvider client={clientganteng}>
+        <Router>
+          <App />
+        </Router>
+      </QueryClientProvider>
     </UserContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
