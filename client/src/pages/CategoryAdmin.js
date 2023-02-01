@@ -16,10 +16,21 @@ export default function CategoryAdmin() {
   const title = 'Category admin';
   document.title = 'DumbMerch | ' + title;
 
-  let { data: categories, refetch } = useQuery('categoriesCache', async () => {
-    const response = await API.get('/categories');
-    return response.data.data;
-  });
+  // let { data: categories, refetch } = useQuery('categoriesCache', async () => {
+  //   const response = await API.get('/categories');
+  //   return response.data.data;
+  // });
+
+  const [categories, setCategories] = useState([]);
+
+  async function getCategories() {
+    try {
+      const response = await API.get('/categories');
+      setCategories(response.data.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const handleEdit = (id) => {
     navigate(`/update-category/${id}`);
@@ -28,6 +39,10 @@ export default function CategoryAdmin() {
   const addCategory = () => {
     navigate('/add-category');
   };
+
+  useEffect(() => {
+    getCategories();
+  }, [])
 
   return (
     <>
@@ -76,7 +91,7 @@ export default function CategoryAdmin() {
                         >
                           Edit
                         </Button>
-                        <Button
+                        {/* <Button
                           onClick={() => {
                             handleDelete(item.id);
                           }}
@@ -84,7 +99,7 @@ export default function CategoryAdmin() {
                           style={{ width: '135px' }}
                         >
                           Delete
-                        </Button>
+                        </Button> */}
                       </td>
                     </tr>
                   ))}
@@ -104,11 +119,11 @@ export default function CategoryAdmin() {
           </Col>
         </Row>
       </Container>
-      <DeleteData
+      {/* <DeleteData
         setConfirmDelete={setConfirmDelete}
         show={show}
         handleClose={handleClose}
-      />
+      /> */}
     </>
   );
 }

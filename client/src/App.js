@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { UserContext } from './context/userContext';
 
@@ -9,11 +9,11 @@ import Complain from './pages/Complain';
 import Profile from './pages/Profile';
 import ComplainAdmin from './pages/ComplainAdmin';
 import CategoryAdmin from './pages/CategoryAdmin';
-import ProductAdmin from './pages/ProductAdmin';
+// import ProductAdmin from './pages/ProductAdmin';
 import UpdateCategoryAdmin from './pages/UpdateCategoryAdmin';
 import AddCategoryAdmin from './pages/AddCategoryAdmin';
 import AddProductAdmin from './pages/AddProductAdmin';
-import UpdateProductAdmin from './pages/UpdateProductAdmin';
+// import UpdateProductAdmin from './pages/UpdateProductAdmin';
 
 import { API, setAuthToken } from './config/api';
 
@@ -25,21 +25,24 @@ if (localStorage.token) {
 function App() {
   let navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
-  console.clear();
+  const [isLoading, setIsLoading] = useState(true);
+
   console.log(state);
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
 
-    // Redirect Auth
-    if (state.isLogin === false) {
-      navigate('/auth');
-    } else {
-      if (state.user.status === 'admin') {
-        navigate('/product-admin');
-      } else if (state.user.status === 'customer') {
-        navigate('/');
+    if (!isLoading) {
+      // Redirect Auth
+      if (state.isLogin === false) {
+        navigate('/auth');
+      } else {
+        if (state.user.status === 'admin') {
+          navigate('/product-admin');
+        } else if (state.user.status === 'customer') {
+          navigate('/');
+        }
       }
     }
   }, [state]);
@@ -65,8 +68,10 @@ function App() {
         type: 'USER_SUCCESS',
         payload,
       });
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
 
@@ -87,9 +92,9 @@ function App() {
       <Route path="/category-admin" element={<CategoryAdmin />} />
       <Route path="/update-category/:id" element={<UpdateCategoryAdmin />} />
       <Route path="/add-category" element={<AddCategoryAdmin />} />
-      <Route path="/product-admin" element={<ProductAdmin />} />
+      {/* <Route path="/product-admin" element={<ProductAdmin />} /> */}
       <Route path="/add-product" element={<AddProductAdmin />} />
-      <Route path="/update-product/:id" element={<UpdateProductAdmin />} />
+      {/* <Route path="/update-product/:id" element={<UpdateProductAdmin />} /> */}
     </Routes>
   );
 }

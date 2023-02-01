@@ -15,8 +15,23 @@ export default function UpdateCategoryAdmin() {
   const { id } = useParams();
 
   // Create Variabel for store category data here ...
+  const [category, setCategory] = useState({
+    name: ""
+  })
 
   // Create function get category data by id from database here ...
+  // let { data } = useQuery('category', async () => {
+  //   const response = await API.get('/category/' + id);
+  //   setCategory({ name: response.data.data.name })
+  //   return response.data.data
+  // });
+
+  useEffect(() => {
+    (async () => {
+      const response = await API.get('/category/' + id);
+      setCategory({ name: response.data.data.name })
+    })()
+  }, [])
 
   const handleChange = (e) => {
     setCategory({
@@ -26,6 +41,15 @@ export default function UpdateCategoryAdmin() {
   };
 
   // Create function for handle submit data ...
+  const handleSubmit = useMutation(async (e) => {
+    try {
+      e.preventDefault();
+      const response = await API.patch('/category/' + id, category)
+      console.log("data berhasil di update", response)
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
   return (
     <>
@@ -36,7 +60,7 @@ export default function UpdateCategoryAdmin() {
             <div className="text-header-category mb-4">Edit Category</div>
           </Col>
           <Col xs="12">
-            <form>
+            <form onSubmit={(e) => handleSubmit.mutate(e)}>
               <input
                 onChange={handleChange}
                 value={category.name}
