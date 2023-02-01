@@ -44,7 +44,7 @@ function App() {
         }
       });
 
-      let payload = response.data.data.user;
+      let payload = response.data.data;
       payload.token = localStorage.token;
 
       dispatch({
